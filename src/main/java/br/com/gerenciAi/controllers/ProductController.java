@@ -3,6 +3,7 @@ package br.com.gerenciAi.controllers;
 import br.com.gerenciAi.models.product.Product;
 import br.com.gerenciAi.models.product.ProductRegisterDTO;
 import br.com.gerenciAi.models.product.ProductRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class ProductController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody ProductRegisterDTO data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity create(@RequestBody @Valid ProductRegisterDTO data, UriComponentsBuilder uriBuilder) {
         var product = new Product(data);
         repository.save(product);
 
