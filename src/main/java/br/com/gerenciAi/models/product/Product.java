@@ -38,4 +38,10 @@ public class Product {
         this.createdAt = data.createdAt();
         this.price = data.price();
     }
+
+    public void updateProduct(ProductEditDTO data) {
+        if(data.name() != null) this.name = data.name();
+        if(data.category() != null) this.category = data.category();
+        if(data.price() != null) this.price = data.price();
+    }
 }
