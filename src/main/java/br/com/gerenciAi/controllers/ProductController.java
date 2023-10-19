@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
@@ -27,16 +28,23 @@ public class ProductController {
         repository.save(product);
 
         var uri = uriBuilder.path("/product/{id}").buildAndExpand(product.getId()).toUri();
-
         return ResponseEntity.created(uri).body(product);
     }
 
     @PatchMapping
     @Transactional
-    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data) {
         var product = repository.getReferenceById(data.id());
         product.updateProduct(data);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity remove(@PathVariable UUID id) {
+        var product = repository.findById(id);
+        repository.deleteById(product.get().getId());
+        return ResponseEntity.ok().body(product);
     }
 
     @GetMapping
