@@ -1,17 +1,17 @@
 package br.com.gerenciAi.controllers;
 
 import br.com.gerenciAi.models.product.Product;
+import br.com.gerenciAi.models.product.ProductEditDTO;
 import br.com.gerenciAi.models.product.ProductRegisterDTO;
 import br.com.gerenciAi.models.product.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -29,5 +29,18 @@ public class ProductController {
         var uri = uriBuilder.path("/product/{id}").buildAndExpand(product.getId()).toUri();
 
         return ResponseEntity.created(uri).body(product);
+    }
+
+    @PatchMapping
+    @Transactional
+    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data, UriComponentsBuilder uriBuilder) {
+        var product = repository.getReferenceById(data.id());
+        product.updateProduct(data);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public List<Product> list() {
+        return repository.findAll();
     }
 }
