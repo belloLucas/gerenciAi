@@ -33,4 +33,11 @@ public class Client {
         this.cpf = data.cpf();
         this.address = new Address(data.address());
     }
+
+    public Client update(ClientEditDTO data) {
+        if(data.email() != null) this.email = data.email();
+        if(data.phone() != null) this.phone = data.email();
+        if(data.address() != null) this.address = new Address(data.address());
+        return this;
+    }
 }

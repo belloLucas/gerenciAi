@@ -1,8 +1,10 @@
 package br.com.gerenciAi.controllers;
 
 import br.com.gerenciAi.models.client.Client;
+import br.com.gerenciAi.models.client.ClientEditDTO;
 import br.com.gerenciAi.models.client.ClientRegisterDTO;
 import br.com.gerenciAi.models.client.ClientRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +32,13 @@ public class ClientController {
     @GetMapping
     public List<Client> list() {
         return repository.findAll();
+    }
+
+    @PatchMapping
+    @Transactional
+    public ResponseEntity update(@RequestBody @Valid ClientEditDTO data) {
+        var client = repository.getReferenceById(data.id());
+        client.update(data);
+        return ResponseEntity.ok().build();
     }
 }
