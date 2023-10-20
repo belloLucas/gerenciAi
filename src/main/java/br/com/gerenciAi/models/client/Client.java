@@ -27,4 +27,12 @@ public class Client {
 
     @Embedded
     private Address address;
+
+    public Client(ClientRegisterDTO data) {
+        this.name = data.name();
+        this.email = data.email();
+        this.phone = data.phone();
+        this.cpf = data.cpf();
+        this.address = data.address();
+    }
 }
