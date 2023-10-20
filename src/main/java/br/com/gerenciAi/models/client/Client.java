@@ -1,10 +1,7 @@
 package br.com.gerenciAi.models.client;
 
 import br.com.gerenciAi.models.address.Address;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email", "phone", "cpf"})})
 public class Client {
     @Id
     @GeneratedValue(generator = "UUID")
