@@ -33,6 +33,6 @@ public class Client {
         this.email = data.email();
         this.phone = data.phone();
         this.cpf = data.cpf();
-        this.address = data.address();
+        this.address = new Address(data.address());
     }
 }
