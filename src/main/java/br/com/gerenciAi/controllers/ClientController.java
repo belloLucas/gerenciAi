@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/client")
@@ -40,5 +41,11 @@ public class ClientController {
         var client = repository.getReferenceById(data.id());
         client.update(data);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void delete(@PathVariable UUID id) {
+        repository.deleteById(id);
     }
 }
