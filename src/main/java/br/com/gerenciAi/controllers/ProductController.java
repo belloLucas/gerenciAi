@@ -4,6 +4,7 @@ import br.com.gerenciAi.models.product.Product;
 import br.com.gerenciAi.models.product.ProductEditDTO;
 import br.com.gerenciAi.models.product.ProductRegisterDTO;
 import br.com.gerenciAi.models.product.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -31,12 +33,12 @@ public class ProductController {
         return ResponseEntity.created(uri).body(product);
     }
 
-    @PatchMapping
+    @PatchMapping("/{id}")
     @Transactional
-    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data) {
-        var product = repository.getReferenceById(data.id());
+    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data, @PathVariable UUID id) {
+        var product = repository.getReferenceById(id);
         product.updateProduct(data);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

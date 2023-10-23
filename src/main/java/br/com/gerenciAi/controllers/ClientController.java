@@ -35,12 +35,12 @@ public class ClientController {
         return repository.findAll();
     }
 
-    @PatchMapping
+    @PatchMapping("/{id}")
     @Transactional
-    public ResponseEntity update(@RequestBody @Valid ClientEditDTO data) {
-        var client = repository.getReferenceById(data.id());
+    public ResponseEntity update(@RequestBody @Valid ClientEditDTO data, @PathVariable UUID id) {
+        var client = repository.getReferenceById(id);
         client.update(data);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
