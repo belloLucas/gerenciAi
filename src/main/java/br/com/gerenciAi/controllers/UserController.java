@@ -1,8 +1,8 @@
 package br.com.gerenciAi.controllers;
 
-import br.com.gerenciAi.models.client.Client;
-import br.com.gerenciAi.dto.ClientEditDTO;
-import br.com.gerenciAi.dto.ClientRegisterDTO;
+import br.com.gerenciAi.models.user.User;
+import br.com.gerenciAi.dto.UserEditDTO;
+import br.com.gerenciAi.dto.UserRegisterDTO;
 import br.com.gerenciAi.repositories.ClientRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,29 +15,29 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/client")
-public class ClientController {
+@RequestMapping("/user")
+public class UserController {
     @Autowired
     private ClientRepository repository;
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody ClientRegisterDTO data, UriComponentsBuilder uriBuilder) {
-        var client = new Client(data);
+    public ResponseEntity create(@RequestBody UserRegisterDTO data, UriComponentsBuilder uriBuilder) {
+        var client = new User(data);
         repository.save(client);
 
-        var uri = uriBuilder.path("/client/{id}").buildAndExpand(client.getId()).toUri();
+        var uri = uriBuilder.path("/user/{id}").buildAndExpand(client.getId()).toUri();
         return ResponseEntity.created(uri).body(client);
     }
 
     @GetMapping
-    public List<Client> list() {
+    public List<User> list() {
         return repository.findAll();
     }
 
     @PatchMapping("/{id}")
     @Transactional
-    public ResponseEntity update(@RequestBody @Valid ClientEditDTO data, @PathVariable UUID id) {
+    public ResponseEntity update(@RequestBody @Valid UserEditDTO data, @PathVariable Long id) {
         var client = repository.getReferenceById(id);
         client.update(data);
         return ResponseEntity.noContent().build();
@@ -45,7 +45,7 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void delete(@PathVariable UUID id) {
+    public void delete(@PathVariable Long id) {
         repository.deleteById(id);
     }
 }

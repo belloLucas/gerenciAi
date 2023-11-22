@@ -1,7 +1,7 @@
-package br.com.gerenciAi.models.client;
+package br.com.gerenciAi.models.user;
 
-import br.com.gerenciAi.dto.ClientEditDTO;
-import br.com.gerenciAi.dto.ClientRegisterDTO;
+import br.com.gerenciAi.dto.UserEditDTO;
+import br.com.gerenciAi.dto.UserRegisterDTO;
 import br.com.gerenciAi.models.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,8 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "tb_clients", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email", "phone", "cpf"})})
-public class Client {
+@Table(name = "tb_users", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email", "phone", "cpf"})})
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +26,7 @@ public class Client {
     @Embedded
     private Address address;
 
-    public Client(ClientRegisterDTO data) {
+    public User(UserRegisterDTO data) {
         this.name = data.name();
         this.email = data.email();
         this.phone = data.phone();
@@ -34,7 +34,7 @@ public class Client {
         this.address = new Address(data.address());
     }
 
-    public void update(ClientEditDTO data) {
+    public void update(UserEditDTO data) {
         if(data.email() != null) this.email = data.email();
         if(data.phone() != null) this.phone = data.email();
         if(data.address() != null) this.address = new Address(data.address());
