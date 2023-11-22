@@ -3,7 +3,7 @@ package br.com.gerenciAi.controllers;
 import br.com.gerenciAi.models.user.User;
 import br.com.gerenciAi.dto.UserEditDTO;
 import br.com.gerenciAi.dto.UserRegisterDTO;
-import br.com.gerenciAi.repositories.ClientRepository;
+import br.com.gerenciAi.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private ClientRepository repository;
+    private UserRepository repository;
 
     @PostMapping
     @Transactional
