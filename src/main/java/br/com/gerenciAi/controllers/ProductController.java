@@ -4,6 +4,7 @@ import br.com.gerenciAi.models.product.Product;
 import br.com.gerenciAi.dto.ProductEditDTO;
 import br.com.gerenciAi.dto.ProductRegisterDTO;
 import br.com.gerenciAi.repositories.ProductRepository;
+import br.com.gerenciAi.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,38 +18,34 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-
     @Autowired
-    private ProductRepository repository;
+    private ProductService productService;
 
     @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody @Valid ProductRegisterDTO data, UriComponentsBuilder uriBuilder) {
-        var product = new Product(data);
-        repository.save(product);
-
-        var uri = uriBuilder.path("/product/{id}").buildAndExpand(product.getId()).toUri();
-        return ResponseEntity.created(uri).body(product);
+        return productService.create(data, uriBuilder);
     }
 
     @PatchMapping("/{id}")
     @Transactional
-    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data, @PathVariable UUID id) {
-        var product = repository.getReferenceById(id);
-        product.updateProduct(data);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity edit(@RequestBody @Valid ProductEditDTO data, @PathVariable Long id) {
+        return productService.edit(data, id);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity remove(@PathVariable UUID id) {
-        var product = repository.findById(id);
-        repository.deleteById(product.get().getId());
-        return ResponseEntity.ok().body(product);
+    public ResponseEntity remove(@PathVariable Long id) {
+        return productService.remove(id);
     }
 
     @GetMapping
-    public List<Product> list() {
-        return repository.findAll();
+    public List<Product> listAllProducts() {
+        return productService.listAllProducts();
+    }
+
+    @GetMapping("/{id}")
+    public Product listProductById(@PathVariable Long id) {
+        return productService.listProductById(id);
     }
 }
