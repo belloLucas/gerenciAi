@@ -35,7 +35,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseEntity remove(Long id) {
+    public ResponseEntity delete(Long id) {
         var product = productRepository.findById(id);
         productRepository.deleteById(product.get().getId());
         return ResponseEntity.ok().body(product);

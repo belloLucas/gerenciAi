@@ -34,8 +34,10 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+    public ResponseEntity delete(Long id) {
+        var user = userRepository.findById(id);
+        userRepository.deleteById(user.get().getId());
+        return ResponseEntity.ok().body(user);
     }
 
     public ResponseEntity<List<User>> listAllUsers() {
