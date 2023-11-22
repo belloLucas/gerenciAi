@@ -1,10 +1,10 @@
 package br.com.gerenciAi.models.client;
 
+import br.com.gerenciAi.dto.ClientEditDTO;
+import br.com.gerenciAi.dto.ClientRegisterDTO;
 import br.com.gerenciAi.models.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -12,11 +12,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email", "phone", "cpf"})})
+@Table(name = "tb_clients", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email", "phone", "cpf"})})
 public class Client {
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private String email;
@@ -34,10 +34,9 @@ public class Client {
         this.address = new Address(data.address());
     }
 
-    public Client update(ClientEditDTO data) {
+    public void update(ClientEditDTO data) {
         if(data.email() != null) this.email = data.email();
         if(data.phone() != null) this.phone = data.email();
         if(data.address() != null) this.address = new Address(data.address());
-        return this;
     }
 }

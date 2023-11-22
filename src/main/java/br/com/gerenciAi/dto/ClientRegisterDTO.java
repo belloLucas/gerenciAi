@@ -1,7 +1,5 @@
-package br.com.gerenciAi.models.client;
+package br.com.gerenciAi.dto;
 
-import br.com.gerenciAi.models.address.Address;
-import br.com.gerenciAi.models.address.AddressDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

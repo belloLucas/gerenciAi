@@ -1,10 +1,9 @@
 package br.com.gerenciAi.controllers;
 
 import br.com.gerenciAi.models.product.Product;
-import br.com.gerenciAi.models.product.ProductEditDTO;
-import br.com.gerenciAi.models.product.ProductRegisterDTO;
-import br.com.gerenciAi.models.product.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
+import br.com.gerenciAi.dto.ProductEditDTO;
+import br.com.gerenciAi.dto.ProductRegisterDTO;
+import br.com.gerenciAi.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController

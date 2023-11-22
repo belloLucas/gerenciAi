@@ -1,5 +1,6 @@
 package br.com.gerenciAi.models.address;
 
+import br.com.gerenciAi.dto.AddressDTO;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

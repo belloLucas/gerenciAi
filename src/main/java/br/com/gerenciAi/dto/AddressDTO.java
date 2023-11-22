@@ -1,4 +1,4 @@
-package br.com.gerenciAi.models.address;
+package br.com.gerenciAi.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

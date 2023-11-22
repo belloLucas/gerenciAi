@@ -1,9 +1,9 @@
 package br.com.gerenciAi.controllers;
 
 import br.com.gerenciAi.models.client.Client;
-import br.com.gerenciAi.models.client.ClientEditDTO;
-import br.com.gerenciAi.models.client.ClientRegisterDTO;
-import br.com.gerenciAi.models.client.ClientRepository;
+import br.com.gerenciAi.dto.ClientEditDTO;
+import br.com.gerenciAi.dto.ClientRegisterDTO;
+import br.com.gerenciAi.repositories.ClientRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
