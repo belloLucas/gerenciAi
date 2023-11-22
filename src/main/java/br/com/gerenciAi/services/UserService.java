@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
@@ -19,7 +17,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping
     @Transactional
     public ResponseEntity createUser(UserRegisterDTO data, UriComponentsBuilder uriBuilder) {
         var user = new User(data);
@@ -41,13 +38,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    @GetMapping
     public ResponseEntity<List<User>> listAllUsers() {
         var users = userRepository.findAll();
         return ResponseEntity.ok().body(users);
     }
 
-    @GetMapping
     public ResponseEntity<User> listUserById(Long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
