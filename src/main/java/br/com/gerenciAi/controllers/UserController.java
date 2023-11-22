@@ -1,13 +1,12 @@
 package br.com.gerenciAi.controllers;
 
-import br.com.gerenciAi.models.user.User;
 import br.com.gerenciAi.dto.UserEditDTO;
 import br.com.gerenciAi.dto.UserRegisterDTO;
-import br.com.gerenciAi.repositories.UserRepository;
+import br.com.gerenciAi.models.user.User;
+import br.com.gerenciAi.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -17,34 +16,30 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserRepository repository;
+    private UserService userService;
 
     @PostMapping
-    @Transactional
     public ResponseEntity create(@RequestBody UserRegisterDTO data, UriComponentsBuilder uriBuilder) {
-        var client = new User(data);
-        repository.save(client);
-
-        var uri = uriBuilder.path("/user/{id}").buildAndExpand(client.getId()).toUri();
-        return ResponseEntity.created(uri).body(client);
+        return userService.createUser(data, uriBuilder);
     }
 
     @GetMapping
-    public List<User> list() {
-        return repository.findAll();
+    public List<User> listAllUsers() {
+        return userService.listAllUsers().getBody();
+    }
+
+    @GetMapping("/{id}")
+    public User listUserById(@PathVariable Long id) {
+        return userService.listUserById(id).getBody();
     }
 
     @PatchMapping("/{id}")
-    @Transactional
     public ResponseEntity update(@RequestBody @Valid UserEditDTO data, @PathVariable Long id) {
-        var client = repository.getReferenceById(id);
-        client.update(data);
-        return ResponseEntity.noContent().build();
+        return userService.update(data, id);
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
     public void delete(@PathVariable Long id) {
-        repository.deleteById(id);
+        userService.delete(id);
     }
 }
