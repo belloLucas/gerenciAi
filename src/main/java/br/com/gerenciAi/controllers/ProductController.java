@@ -35,8 +35,8 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity remove(@PathVariable Long id) {
-        return productService.remove(id);
+    public ResponseEntity delete(@PathVariable Long id) {
+        return productService.delete(id);
     }
 
     @GetMapping
